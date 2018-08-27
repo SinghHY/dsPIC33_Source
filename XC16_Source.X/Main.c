@@ -9,11 +9,6 @@
 * IC                U22, U26 on Source Board
 ************************************************************************/
 
-#define P_Gain 2 //13// 
-#define D_Gain 400 //621//
-#define I_Gain 15 //13// 
-
-
 #include "p33Fxxxx.h"
 #include <spi.h>
 #include <outcompare.h>
@@ -31,18 +26,11 @@ unsigned short CommandCounter1 = 0;
 int txdData1;
 int TempAverageOld = 0;
 int AverageCounter = 0;
-unsigned int ControlledBand = 15; 
-unsigned int IntegralCounter = 0;
-unsigned int IntegralCounterMax = 34000;// 27021;//60021
-unsigned int IntegralCounterDec = 320000;//1921; 
-unsigned int Integral=0 ;
 int BoostCounter =0;
 int IntegralBoost = 1;
 int LoopCounter = 0;
 unsigned int RampTime =0;
 unsigned short MyResult = 0;
-// Functions //
-unsigned short Calculate ( unsigned short TempSetpoint, unsigned short Temperature);
 
 
 //*************************************************************************************//
@@ -63,29 +51,35 @@ void __attribute__((__interrupt__,no_auto_psv)) _SPI2Interrupt(void)
 }
 
 
+unsigned short ADC_Read(unsigned short ch)
+  {
+    unsigned short ADC_out;
+    AD1CHS0 = ch;//select AN0 //
+    AD1CON1bits.SAMP = 1; // start sampling  ADC1
+    while (!AD1CON1bits.DONE);
+    AD1CON1bits.DONE = 0;
+    ADC_out = ADC1BUF0;
+    ADC_out >>= 2; //adjust adc from 10 bit to 8 bit value//
+    return ADC_out;
+  }
+
 //---------------------------- Main loop-------------------------------------------//
-int main(void)
+void main(void)
 {
 
 int Instruction1; // 1,2,3
-int DisplayCounter =0;
-long int TempDisplay =1;
-long int TempAverage = 1;
-long int TempAverageCopy = 1;
 
 
 
-unsigned short ResultHV; 
 unsigned short ResultTemperature;
-unsigned short ResultTemperatureCopy;
 unsigned short Temperature;
 unsigned short TempSetpoint = 0;
 unsigned short HVSetpoint1 = 0;
 unsigned short HVSetpoint2 = 0;
 unsigned char TempSetpointLow=0;
 unsigned char TempSetpointHi=0;
-unsigned char TemperatureLowDisplay=0;
-unsigned char TemperatureHiDisplay=0;
+unsigned short HeatPower =0;
+
 unsigned char VoltageMonitorLow1=0;
 unsigned char HVSetpointLow1=0;
 unsigned char HVSetpointHi1=0;
@@ -254,36 +248,16 @@ while(1)
         if (TempSetpoint > 700) 
              TempSetpoint =700;    //limit for TempSetpoint     
                 //Now its time to read ADCs //
-
-        AD1CHS0 = 0x0000;//select AN0 HV-Monitor 1//
-        AD1CON1bits.SAMP = 1; // start sampling  ADC1
-        while (!AD1CON1bits.DONE);
-        AD1CON1bits.DONE = 0;
-        ResultHV = ADC1BUF0;
-        ResultHV >>= 2; //adjust adc from 10 bit to 8 bit value//
-        VoltageMonitorLow1 = ResultHV ;
-
-        AD1CHS0 = 0x001e;//select AN30 ESI-1//
-        AD1CON1bits.SAMP = 1; // start sampling  ADC1
-        while (!AD1CON1bits.DONE);
-        AD1CON1bits.DONE = 0;
-        MyResult = ADC1BUF0;
-        MyResult >>= 2; //adjust adc from 10 bit to 8 bit value//
-
-
-
-//---------------------------------------------------------------------------------------------------------------------
-	
-        AD1CHS0 = 0x0002;  //select AN2 TC2//
-        AD1CON1bits.SAMP = 1; // start sampling  ADC1
-        while (!AD1CON1bits.DONE);
-        AD1CON1bits.DONE = 0;
-        ResultTemperature = ADC1BUF0;
+        
+        
+        VoltageMonitorLow1 = ADC_Read(0);
+        MyResult = ADC_Read(30);
+        ResultTemperature= ADC_Read(2);
         Temperature = (ResultTemperature * 43 )/50 ; //consider termocouple posiotion in source//
 
+        SetPulseOC3(0x0, (65533 -  HeatPower) );
                     
     }//for while
-   return 0;
 
 }//for main
 
