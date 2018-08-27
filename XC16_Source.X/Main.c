@@ -281,34 +281,6 @@ while(1)
         ResultTemperature = ADC1BUF0;
         Temperature = (ResultTemperature * 43 )/50 ; //consider termocouple posiotion in source//
 
-  //Now its time to calculate average of Temperature for display //
-        TempAverage = Temperature + TempAverage;
-        AverageCounter++;
-
-        if (AverageCounter == 3000) //if we have 2 samples, control heatthers //
-        {
-                TempAverage = TempAverage /  3000;    // this is real average of temp and calibration //
- 
-                //clear all the buffers//	
-                AverageCounter = 0;
-                TempAverageCopy = TempAverage;         
-                TempAverage=0; 	
-
-                //now digital filtering for display for noise reduction//
-                TempDisplay = TempAverageCopy + TempDisplay;
-                DisplayCounter++;
-            if (DisplayCounter ==30)
-            {
-                DisplayCounter =0;
-                TempDisplay = TempDisplay/30;
- 
-                ResultTemperatureCopy = TempDisplay;
-                TemperatureLowDisplay = ResultTemperatureCopy;
-                ResultTemperatureCopy >>= 8;
-                TemperatureHiDisplay = ResultTemperatureCopy; 	
-                TempDisplay =0;     
-            }//display filter end//
-        }
                     
     }//for while
    return 0;
