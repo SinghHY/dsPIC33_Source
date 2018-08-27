@@ -232,7 +232,8 @@ while(1)
         TempSetpoint = TempSetpointLow + (TempSetpoint * 0xff) ;
 
 
-        if (TempSetpoint > 700) TempSetpoint =700;    //limit for TempSetpoint     
+        if (TempSetpoint > 700) 
+             TempSetpoint =700;    //limit for TempSetpoint     
                 //Now its time to read ADCs //
 
         AD1CHS0 = 0x0000;//select AN0 //
@@ -269,7 +270,7 @@ while(1)
 
       if (TempSetpoint >= Temperature )
         {
-            if ( Temperature < (TempSetpoint - ControlledBand) )
+            if ( Temperature < (TempSetpoint - ControlledBand) ) //ControlledBand = 15
                {
                 //HeatPower =65532; 
                 if (HeatPower < 60000)    //45000 on rev 6
@@ -322,7 +323,6 @@ while(1)
             else if ( (Temperature - 3 )  > TempSetpoint)
                         HeatPower = TempSetpoint * 25; //cut off the heat if its 10 degree more than setpoint 
         
-
         }  
 
         if (HeatPower > 65532) HeatPower = 65532; 
@@ -382,7 +382,6 @@ void __attribute__((__interrupt__,no_auto_psv)) _SPI2Interrupt(void)
 
     PORTGbits.RG15 = 1 ;
     rxdData1 = ReadSPI2();
-
 
     SPIFlag =1;
     CommandCounter1 = CommandCounter1 +1 ;

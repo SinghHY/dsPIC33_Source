@@ -144,10 +144,10 @@ xc16-ld 1.35 (A)
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x5ae           0x885  (2181)
-.text                        0x7ae               0x5d8           0x8c4  (2244)
-.dinit                       0xd86                0x14            0x1e  (30)
+.text                        0x7ae               0x5fc           0x8fa  (2298)
+.dinit                       0xdaa                0x14            0x1e  (30)
 
-                 Total "program" memory used (bytes):         0x1167  (4455) 1%
+                 Total "program" memory used (bytes):         0x119d  (4509) 1%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x4000]
@@ -473,7 +473,7 @@ __FSS
 
 __FGS             0xf80004          0x2
  *(__FGS.sec*)
- __FGS.sec        0xf80004          0x2 /CW/_FGS¸ýÿ
+ __FGS.sec        0xf80004          0x2 /CW/_FGS(	`	__FGS.sec
                   0xf80004                  __FGS.sec
 
 __FOSCSEL         0xf80006          0x2
@@ -509,26 +509,26 @@ __FUID3
 .comment
  *(.comment)
 
-.debug_info       0x000000        0xe36
+.debug_info       0x000000        0xdce
  *(.debug_info)
- .debug_info      0x000000        0xe36 build/default/production/Main.o
+ .debug_info      0x000000        0xdce build/default/production/Main.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x176
+.debug_abbrev     0x000000        0x15a
  *(.debug_abbrev)
- .debug_abbrev    0x000000        0x176 build/default/production/Main.o
+ .debug_abbrev    0x000000        0x15a build/default/production/Main.o
 
-.debug_line       0x000000        0x1dc
+.debug_line       0x000000        0x1e9
  *(.debug_line)
- .debug_line      0x000000        0x1dc build/default/production/Main.o
+ .debug_line      0x000000        0x1e9 build/default/production/Main.o
 
 .debug_frame      0x000000         0x76
  *(.debug_frame)
  .debug_frame     0x000000         0x76 build/default/production/Main.o
 
-.debug_str        0x000000        0x125
+.debug_str        0x000000        0x11b
  *(.debug_str)
- .debug_str       0x000000        0x125 build/default/production/Main.o
+ .debug_str       0x000000        0x11b build/default/production/Main.o
 
 .debug_loc
  *(.debug_loc)
@@ -1626,7 +1626,7 @@ LOAD c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\libm-elf.a
 LOAD c:/program files (x86)/microchip/xc16/v1.35/bin/bin/../../lib\liblega-c-elf.a
 END GROUP
 OUTPUT(dist/default/production/XC16_Source.X.production.elf elf32-pic30)
-LOAD /CW/_FGS¸ýÿ
+LOAD /CW/_FGS(	`	__FGS.sec
 LOAD default_isr
 LOAD data_init
 
@@ -1737,9 +1737,9 @@ __c30_signature
  .ivt._SPI2Interrupt
                   0x000056          0x2 build/default/production/Main.o
 
-.text             0x0007ae        0x5d8
- .text            0x0007ae        0x5d8 build/default/production/Main.o
+.text             0x0007ae        0x5fc
+ .text            0x0007ae        0x5fc build/default/production/Main.o
                   0x0007ae                  _main
 
-.dinit            0x000d86         0x14
- .dinit           0x000d86         0x14 data_init
+.dinit            0x000daa         0x14
+ .dinit           0x000daa         0x14 data_init
