@@ -271,81 +271,6 @@ while(1)
         MyResult >>= 2; //adjust adc from 10 bit to 8 bit value//
 
 
-   
-   if (LoopCounter++ == 21)    //21
-    {
-        LoopCounter =0;  	
-
-        //  control the Heater based on PID algorithm //
- 
-         Temperature = TempAverageCopy;
-       //  HeatPower = Calculate(TempSetpoint , Temperature);
-
-        //-------------------------------------------------------------------------------------//
-        //                                Calculate                                            //
-        //-------------------------------------------------------------------------------------//
-
-     unsigned int HeatPower;
-
-      if (TempSetpoint >= Temperature )
-        {
-            if ( Temperature < (TempSetpoint - ControlledBand) ) //ControlledBand = 15
-               {
-                //HeatPower =65532; 
-                if (HeatPower < 60000)    //45000 on rev 6
-                  { 
-                    RampTime++;  
-                    if (RampTime == 7)
-                        {      
-                            HeatPower = HeatPower +1;
-                            RampTime =0;    
-                        } 
-                  }
-                if (HeatPower == 60000)
-                     HeatPower = 65533; 
-                if (BoostCounter++ > 13000)   
-                    { 
-                        if ( IntegralBoost < 6 ) 
-                             IntegralBoost++;
-                        
-                        BoostCounter = 0; 
-                        Integral  = IntegralBoost * TempSetpoint ;    
-                    } 
-                } 
-            else  
-            {
-
-                if ( IntegralCounter++ > (IntegralCounterMax /  ((TempSetpoint - Temperature)+1) ))
-                    {
-                        IntegralCounter = 0;
-                        if (Temperature <=  TempSetpoint  )
-                                Integral++;
-                        if ( Integral > 4400 )  Integral = 4400 ;
-                    }           
-              HeatPower = ( (((TempSetpoint+1)/(Temperature+1)) * P_Gain)  + (Integral * I_Gain )  + ((TempSetpoint - Temperature)* D_Gain) ); 
-
-            }
-        }
-      else if   (TempSetpoint < Temperature )
-        { 
-
-            if (( Temperature   > TempSetpoint) & ((Temperature - 3)< TempSetpoint)) 
-                {
-                    HeatPower =  ( (((TempSetpoint+1)/(Temperature+1)) * P_Gain)  + ((Integral/1.21) * I_Gain )  - ((  Temperature - TempSetpoint)* D_Gain) ); 
-
-                    if (IntegralCounter++ > IntegralCounterDec )
-                        {
-                            IntegralCounter = 0;
-                            if (Integral > 0) Integral--;
-                        }   
-                }
-            else if ( (Temperature - 3 )  > TempSetpoint)
-                        HeatPower = TempSetpoint * 25; //cut off the heat if its 10 degree more than setpoint 
-        
-        }  
-
-        if (HeatPower > 65532) HeatPower = 65532; 
-            SetPulseOC3(0x0, (65533 -  HeatPower) );   
 
 //---------------------------------------------------------------------------------------------------------------------
 	
@@ -384,8 +309,6 @@ while(1)
                 TempDisplay =0;     
             }//display filter end//
         }
-
-	 }   //end of main loop for thermo controller//
                     
     }//for while
    return 0;
