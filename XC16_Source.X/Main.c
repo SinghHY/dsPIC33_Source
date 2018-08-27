@@ -255,7 +255,7 @@ while(1)
              TempSetpoint =700;    //limit for TempSetpoint     
                 //Now its time to read ADCs //
 
-        AD1CHS0 = 0x0000;//select AN0 //
+        AD1CHS0 = 0x0000;//select AN0 HV-Monitor 1//
         AD1CON1bits.SAMP = 1; // start sampling  ADC1
         while (!AD1CON1bits.DONE);
         AD1CON1bits.DONE = 0;
@@ -263,7 +263,7 @@ while(1)
         ResultHV >>= 2; //adjust adc from 10 bit to 8 bit value//
         VoltageMonitorLow1 = ResultHV ;
 
-        AD1CHS0 = 0x001e;//select AN30 //
+        AD1CHS0 = 0x001e;//select AN30 ESI-1//
         AD1CON1bits.SAMP = 1; // start sampling  ADC1
         while (!AD1CON1bits.DONE);
         AD1CON1bits.DONE = 0;
@@ -349,7 +349,7 @@ while(1)
 
 //---------------------------------------------------------------------------------------------------------------------
 	
-        AD1CHS0 = 0x0002;  //select AN2 //
+        AD1CHS0 = 0x0002;  //select AN2 TC2//
         AD1CON1bits.SAMP = 1; // start sampling  ADC1
         while (!AD1CON1bits.DONE);
         AD1CON1bits.DONE = 0;
