@@ -5,7 +5,8 @@
 * FileName:        Main.c
 * Processor:       dsPIC33FJ256GP510A
 * Compiler:        XC16 v1.35 or Higher
-* Version:     
+* Version:          1
+* IC                U22, U26 on Source Board
 ************************************************************************/
 
 #define P_Gain 2 //13// 
@@ -44,6 +45,24 @@ unsigned short MyResult = 0;
 unsigned short Calculate ( unsigned short TempSetpoint, unsigned short Temperature);
 
 
+//*************************************************************************************//
+//SPI2 Interrupt //
+void __attribute__((__interrupt__,no_auto_psv)) _SPI2Interrupt(void) 
+{    
+    IFS2bits.SPI2IF = 0;
+    SPI2STATbits.SPIROV = 0;  // Clear SPI1 receive overflow flag if set //
+
+    PORTGbits.RG15 = 1 ;
+    rxdData1 = ReadSPI2();
+
+    SPIFlag =1;
+    CommandCounter1 = CommandCounter1 +1 ;
+    
+    if (!SPI2STATbits.SPITBF)
+        WriteSPI2(txdData1);//if txd buffer is rdy send data//
+}
+
+
 //---------------------------- Main loop-------------------------------------------//
 int main(void)
 {
@@ -72,15 +91,15 @@ unsigned char HVSetpointLow1=0;
 unsigned char HVSetpointHi1=0;
 unsigned char APCIRealTime=0;
 unsigned char ESIRealTime=0;
-unsigned char ProbeId=0x0, version = 18;
+unsigned char ProbeId=0x0, version = 0x1;
 
 
 
 // init the SPI 1 and SPI2
 
-                	    // enable slave, mode8, cke=1, ckp = 0, smp = 0
-    SPI2CON1 = 0x8080;	//0x8080 enables the spi
-    SPI2STAT = 0x8000;
+    SPI2CON1 = 0x8080;  //enable slave, mode8, cke=1, ckp = 0, smp = 0
+    SPI2STAT = 0x8000;	//0x8080 enables the spi
+
  
     TRISG = 0x00;
     //init PWM for HV1 and HV2 , fc 90KHZ //
@@ -123,10 +142,10 @@ unsigned char ProbeId=0x0, version = 18;
 	AD1CON1bits.ADON =1; // ADC1 on
 
 /* Configure SPI2 interrupt */
-
     ConfigIntSPI2(SPI_INT_EN &  SPI_INT_PRI_6);
-// start of main loop !!!! //
+    
 
+// start of main loop !!!! //
 while(1)
  {
     if (( MyResult < 50) & (PORTEbits.RE7 == 0))
@@ -373,21 +392,6 @@ while(1)
 
 }//for main
 
-//*************************************************************************************//
-//Time to check SPI2 for any new data//
-void __attribute__((__interrupt__,no_auto_psv)) _SPI2Interrupt(void) 
-{    
-    IFS2bits.SPI2IF = 0;
-    SPI2STATbits.SPIROV = 0;  // Clear SPI1 receive overflow flag if set //
 
-    PORTGbits.RG15 = 1 ;
-    rxdData1 = ReadSPI2();
-
-    SPIFlag =1;
-    CommandCounter1 = CommandCounter1 +1 ;
-    
-    if (!SPI2STATbits.SPITBF)
-        WriteSPI2(txdData1);//if txd buffer is rdy send data//
-}
 
 
