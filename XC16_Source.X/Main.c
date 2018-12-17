@@ -72,7 +72,7 @@ int Instruction1; // 1,2,3
 
 
 unsigned short ResultTemperature;
-unsigned short Temperature;
+unsigned short Temperature, TemperatureHiDisplay = 0, TemperatureLowDisplay = 0;
 unsigned short TempSetpoint = 0;
 unsigned short HVSetpoint1 = 0;
 unsigned short HVSetpoint2 = 0;
@@ -204,7 +204,7 @@ while(1)
                     case 1:      
                              Instruction1 = rxdData1;
                              if ((Instruction1 == 1) ^ (Instruction1 == 11))
-                                  txdData1=0;
+                                  txdData1 = TemperatureLowDisplay;
                              else if ((Instruction1 == 2) ^ (Instruction1 == 12))
                                       txdData1=VoltageMonitorLow1;
                              else if (Instruction1 == 3)
@@ -212,7 +212,7 @@ while(1)
                             break;
                     case 2:   
                              if ((Instruction1 == 1)^(Instruction1 == 11))	
-                                  txdData1=0;
+                                  txdData1 = TemperatureHiDisplay;
                              else if ((Instruction1 == 2)^(Instruction1 == 12))
                                    txdData1=0;     
                              else if (Instruction1 == 3)
@@ -254,7 +254,8 @@ while(1)
         MyResult = ADC_Read(30);
         ResultTemperature= ADC_Read(2);
         Temperature = (ResultTemperature * 43 )/50 ; //consider termocouple posiotion in source//
-
+        TemperatureHiDisplay = Temperature >> 8;
+        TemperatureLowDisplay = Temperature;
         SetPulseOC3(0x0, (65533 -  HeatPower) );
                     
     }//for while
