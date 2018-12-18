@@ -1,0 +1,18 @@
+ÀÄCCS_Source
+   ÃÄMAIN  0/316  Ram=1
+   ³  ÃÄ@cinit1  (Inline)  Ram=1
+   ³  ÃÄ@SITOF  0/74  Ram=128
+   ³  ÃÄ@ADDFF  0/426  Ram=58
+   ³  ÃÄ@SITOF  0/74  Ram=128
+   ³  ÀÄ@SFTOI  0/44  Ram=62
+   ÃÄspi2_slave_isr  0/270  Ram=1
+   ³  ÀÄ@SPI_XFER_IN_1  0/44  Ram=6
+   ÀÄtimer1_isr  0/174  Ram=1
+      ÃÄ@ITOF  0/58  Ram=127
+      ÃÄ@MULFF  0/196  Ram=58
+      ÃÄ@ADDFF  0/426  Ram=58
+      ÃÄ@ADDFF  0/426  Ram=58
+      ÃÄ@MULFF  0/196  Ram=58
+      ÃÄ@ADDFF  0/426  Ram=58
+      ÃÄ@ADDFF  0/426  Ram=58
+      ÀÄ@DIVFF  0/202  Ram=58

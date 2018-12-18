@@ -1,0 +1,109 @@
+W0      @SCRATCH
+W0L     _RETURN_
+W0 -W1  @SFTOI.P1
+W0 -W1  @READ_ROM_MEMORY.P2
+W0 -W1  @DIV3232B.P3
+W0 -W1  @ADDFF.P4
+W0      @ITOF.P5
+W0 -W1  @DIVFF.P6
+W0      @delay_ms1.P7
+W0      @delay_us1.P8
+W0 -W1  @SPI_XFER_1.P9
+W0 -W1  @MULFF.P10
+W0      @SITOF.P11
+W1      @SCRATCH
+W1      @READ_PACKED_MEMORY.P1
+W1      @WRITE_PACKED_MEMORY.P2
+W2      @READ_ROM_MEMORY.P1
+W2 -W3  @DIVFF.P2
+W2      @WRITE_PACKED_MEMORY.P3
+W2      @SPI_XFER_1.P4
+W2      @SPI_XFER_IN_1.P5
+W2 -W3  @DIV3232B.P6
+W2 -W3  @ADDFF.P7
+W2      @READ_PACKED_MEMORY.P8
+W2 -W3  @MULFF.P9
+W3      @READ_PACKED_MEMORY.P1
+W3      @WRITE_PACKED_MEMORY.P2
+W3      @READ_ROM_MEMORY.P3
+800     @SPIWRITE_1
+801     SPI_Flag
+802-805 Alpha
+806-809 C_out
+80A-80D Set_Point
+80E-811 M_Variable
+812-815 Error
+816-819 Previous_Error
+81A-81D dt
+81E-821 Kp
+822-825 Ki
+826-829 Kd
+82A-82D Integral
+82E-831 Derivative
+832     Byte_Count
+833     Rx
+834     Tx
+835     Cmand
+836     ProbeID
+837     count
+838     Version
+839     SP
+83A     SP_H
+83B     MV
+83C-83D value
+83E-83F duty
+840-841 Err_cnt
+842     MVH
+3F80-3FFF Stack
+
+ROM Allocation:
+000200  @SPI_XFER_IN_1
+00022C  spi2_slave_isr
+00033A  @ITOF
+000374  @MULFF
+000438  @ADDFF
+0005E2  @DIVFF
+0006AC  timer1_isr
+00075A  @SITOF
+0007A4  @SFTOI
+0007D0  MAIN
+0007D0  @cinit1
+000876  @cinit2
+
+Project Directory:
+    C:\GitRepo\dsPIC33_Source\CCS_Source.X\
+
+Project Files:
+    Main.c                                                  [18-Dec-18 16:14  CRC=50E7C820]
+    ..\..\..\Program Files (x86)\PICC\devices\33FJ256GP510.h [14-Feb-17 13:54  CRC=50E31F6B]
+
+Source signature=F2AE06F6
+Program memory checksum=0000
+Program memory CRC=0000
+Hex file CRC=44C6
+
+Units:
+    Main (main)
+
+Compiler Settings:
+    Processor:      DSPIC33FJ256GP510
+    Pointer Size:   16
+    ADC Range:      0-4095
+    Opt Level:      9
+    Short,Int,Long: SIGNED: 8,16,32
+    Float,Double:   32,64
+    Compile Mode:       CCS5
+    Predefined symbols:
+       #define __dsPIC33FJ256GP510__ 1
+
+Output Files:
+    XREF file:   build\default\production\Main.xsym
+    Errors:      build\default\production\Main.err
+    Ext Symbols: build\default\production\Main.esym
+    INHX8:       build\default\production\Main.hex
+    Symbols:     build\default\production\Main.sym
+    List:        build\default\production\Main.lst
+    Debug/COFF:  build\default\production\Main.cof
+    Project:     Main.ccspjt
+    Call Tree:   build\default\production\Main.tre
+    Statistics:  build\default\production\Main.STA

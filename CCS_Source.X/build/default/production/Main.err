@@ -1,0 +1,14 @@
+C:\GitRepo\dsPIC33_Source\CCS_Source.X\Main.c:124:1:  Warning#203  Condition always TRUE
+C:\GitRepo\dsPIC33_Source\CCS_Source.X\Main.c:138:1:  Warning#216  Interrupts disabled during call to prevent re-entrancy:  (@ADDFF)
+C:\GitRepo\dsPIC33_Source\CCS_Source.X\Main.c:24:7:  Warning#202  Variable never used:   C_out
+C:\GitRepo\dsPIC33_Source\CCS_Source.X\Main.c:25:18:  Warning#202  Variable never used:   Kp
+C:\GitRepo\dsPIC33_Source\CCS_Source.X\Main.c:25:26:  Warning#202  Variable never used:   Ki
+C:\GitRepo\dsPIC33_Source\CCS_Source.X\Main.c:25:36:  Warning#202  Variable never used:   Kd
+C:\GitRepo\dsPIC33_Source\CCS_Source.X\Main.c:28:6:  Warning#202  Variable never used:   SPI_Flag
+C:\GitRepo\dsPIC33_Source\CCS_Source.X\Main.c:28:40:  Warning#202  Variable never used:   Tx
+C:\GitRepo\dsPIC33_Source\CCS_Source.X\Main.c:28:63:  Warning#202  Variable never used:   count
+C:\GitRepo\dsPIC33_Source\CCS_Source.X\Main.c:30:23:  Warning#202  Variable never used:   duty
+C:\GitRepo\dsPIC33_Source\CCS_Source.X\Main.c:30:29:  Warning#202  Variable never used:   Err_cnt
+      Memory usage:   ROM=1%      RAM=1% - 2%
+      0 Errors,  11 Warnings.
+Build Successful.

@@ -1,0 +1,16 @@
+[PROJECT]
+Target=build\default\production\Main.hex
+Processor_Text=DSPIC33FJ256GP510
+CCSVersion=5.074
+Compiler=PCD
+[Target Data]
+FileList=Main.c
+[build\default\production\Main.c]
+Type=4
+[mru-list]
+1=build\default\production\Main.c
+[build\default\debug\Main.c]
+Type=4
+[Units]
+Count=1
+1=Main (main)
